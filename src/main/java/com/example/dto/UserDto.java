@@ -5,15 +5,6 @@ public class UserDto {
     private String email;
     private String password;
 
-    public UserDto(Integer id, String email, String password) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-    }
-
-    public UserDto() {
-    }
-
     public Integer getId() {
         return id;
     }
