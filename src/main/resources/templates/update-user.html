@@ -1,0 +1,12 @@
+<form action="#"
+      th:action="@{/edit/{id}(id=${userDto.id})}"
+      th:object="${userDto}"
+      th:method="put" xmlns:th="http://www.w3.org/1999/xhtml">
+    <label for="email">Email</label>
+    <input type="email" th:field="*{email}" id="email" placeholder="Email">
+    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+    <label for="password">Password</label>
+    <input type="password" th:field="*{password}" id="password" placeholder="Password">
+    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+    <input type="submit" value="Update User">
+</form>
