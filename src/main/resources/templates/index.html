@@ -1,22 +1,59 @@
-<div th:switch="${users}" xmlns:th="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Мерч ИПК</title>
+</head>
+<body>
+
+<div style="background-color: #f8f9fa; padding: 15px; margin-bottom: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; border-radius: 5px; font-family: Arial, sans-serif;">
+
+    <div>
+            <span th:if="${session.currentUser != null}">
+                Logged in as: <strong th:text="${session.currentUser}"></strong>
+            </span>
+        <span th:if="${session.currentUser == null}">
+                You are browsing as a <strong>Guest</strong>
+            </span>
+    </div>
+
+    <div>
+            <span th:if="${session.currentUser == null}">
+                <a href="/signin" style="margin-right: 15px; text-decoration: none; padding: 6px 12px; background-color: #007bff; color: white; border-radius: 4px; display: inline-block;">Sign In</a>
+                <a href="/signup" style="text-decoration: none; padding: 6px 12px; background-color: #28a745; color: white; border-radius: 4px; display: inline-block;">Sign Up</a>
+            </span>
+
+        <span th:if="${session.currentUser != null}">
+                <a href="/signout" style="text-decoration: none; padding: 6px 12px; background-color: #dc3545; color: white; border-radius: 4px; display: inline-block;">Sign Out</a>
+            </span>
+    </div>
+</div>
+
+<div th:switch="${users}">
+
     <h2 th:case="null">No users yet!</h2>
+
     <div th:case="*">
         <h2>Users</h2>
-        <table>
+        <table border="1" style="border-collapse: collapse; width: 100%; max-width: 600px; text-align: left;">
             <thead>
-            <tr>
-                <th>Email</th>
-                <th>Edit</th>
-                <th>Delete</th>
+            <tr style="background-color: #f2f2f2;">
+                <th style="padding: 8px;">Email</th>
+                <th th:if="${session.currentUser == 'admin'}" style="padding: 8px;">Edit</th>
+                <th th:if="${session.currentUser == 'admin'}" style="padding: 8px;">Delete</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="user : ${users}">
-                <td th:email="${user.email}"></td>
-                <td><a th:href="@{/edit/{id}(id=${user.id})}">Edit</a></td>
-                <td>
+                <td th:text="${user.email}" style="padding: 8px;"></td>
+
+                <td th:if="${session.currentUser == 'admin'}" style="padding: 8px;">
+                    <a th:href="@{/edit/{id}(id=${user.id})}">Edit</a>
+                </td>
+
+                <td th:if="${session.currentUser == 'admin'}" style="padding: 8px;">
                     <form th:action="@{/delete/{id}(id=${user.id})}" th:method="delete" style="display:inline;">
-                        <button type="submit" onclick="return confirm('Are you sure?')" style="background:none; border:none; color:red; cursor:pointer; text-decoration:underline; padding:0;">
+                        <button type="submit" onclick="return confirm('Are you sure?')" style="background:none; border:none; color:red; cursor:pointer; text-decoration:underline; padding:0; font-family: inherit; font-size: inherit;">
                             Delete
                         </button>
                     </form>
@@ -25,5 +62,11 @@
             </tbody>
         </table>
     </div>
-    <p><a href="/signup">Add a new user</a></p>
+
+    <p th:if="${session.currentUser == 'admin'}">
+        <a href="/signup">Add a new user</a>
+    </p>
 </div>
+
+</body>
+</html>

@@ -3,6 +3,7 @@ package com.example.controllers;
 import com.example.dto.UserDto;
 import com.example.services.UserCRUDService;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,13 +33,18 @@ public class UserController {
     }
 
     @PostMapping("/adduser")
-    public String addUser (@ModelAttribute("userDto") UserDto userDto, BindingResult result) {
+    public String addUser (@ModelAttribute("userDto") UserDto userDto, BindingResult result, HttpSession session) {
         if (result.hasErrors() || userDto.getEmail().isEmpty() || userDto.getPassword().isEmpty()) {
             return "add-user";
         }
 
         userService.create(userDto);
-        return "redirect:/signin";
+
+        if (session.getAttribute("currentUser") == null) {
+            return "redirect:/signin";
+        }
+
+        return "redirect:/";
     }
 
     @PutMapping("/edit/{id}")
@@ -54,10 +60,11 @@ public class UserController {
         return "redirect:/";
     }
 
-    @PostMapping("/authenticate")
+    @PostMapping("/signin")
     public String authenticate(Model model,
                                @ModelAttribute("userDto") UserDto userDto,
-                               HttpServletResponse response) {
+                               HttpServletResponse response,
+                               HttpSession session) {
         if (userDto.getEmail().isEmpty() || userDto.getPassword().isEmpty()) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             model.addAttribute("error", "Убедитесь, что все поля заполнены");
@@ -69,6 +76,15 @@ public class UserController {
             model.addAttribute("error", "Неверный email или пароль");
             return "signin-form";
         }
+
+        session.setAttribute("currentUser", userDto.getEmail());
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/signout")
+    public String signOut(HttpSession session) {
+        session.invalidate();
 
         return "redirect:/";
     }
