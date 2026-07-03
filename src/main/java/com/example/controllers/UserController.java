@@ -47,14 +47,14 @@ public class UserController {
         return "redirect:/";
     }
 
-    @PutMapping("/edit/{id}")
+    @PutMapping("/edit_user/{id}")
     public String updateUser(@PathVariable Integer id, @ModelAttribute("userDto") UserDto userDto) {
         userDto.setId(id);
         userService.update(userDto);
         return "redirect:/";
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete_user/{id}")
     public String deleteUser(@PathVariable Integer id) {
         userService.delete(id);
         return "redirect:/";
@@ -109,7 +109,7 @@ public class UserController {
         return "signin-form";
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("/edit_user/{id}")
     public String showUserUpdatePage(@PathVariable Integer id, Model model) {
         UserDto userDto = userService.getById(id);
         userDto.setPassword("");

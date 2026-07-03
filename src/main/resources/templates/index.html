@@ -48,11 +48,11 @@
                 <td th:text="${user.email}" style="padding: 8px;"></td>
 
                 <td th:if="${session.currentUser == 'admin'}" style="padding: 8px;">
-                    <a th:href="@{/edit/{id}(id=${user.id})}">Edit</a>
+                    <a th:href="@{/edit_user/{id}(id=${user.id})}">Edit</a>
                 </td>
 
                 <td th:if="${session.currentUser == 'admin'}" style="padding: 8px;">
-                    <form th:action="@{/delete/{id}(id=${user.id})}" th:method="delete" style="display:inline;">
+                    <form th:action="@{/delete_user/{id}(id=${user.id})}" th:method="delete" style="display:inline;">
                         <button type="submit" onclick="return confirm('Are you sure?')" style="background:none; border:none; color:red; cursor:pointer; text-decoration:underline; padding:0; font-family: inherit; font-size: inherit;">
                             Delete
                         </button>

@@ -1,5 +1,5 @@
 <form action="#"
-      th:action="@{/edit/{id}(id=${userDto.id})}"
+      th:action="@{/edit_user/{id}(id=${userDto.id})}"
       th:object="${userDto}"
       th:method="put" xmlns:th="http://www.w3.org/1999/xhtml">
     <label for="email">Email</label>

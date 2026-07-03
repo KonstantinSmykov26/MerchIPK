@@ -8,9 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.util.Collection;
 
-@Service
 @Slf4j
-public class UserCRUDService implements CRUDService<UserDto>{
+@Service
+public class UserCRUDService implements CRUDService<UserDto> {
     private final UserRepository userRepository;
 
     public UserCRUDService(UserRepository userRepository) {
@@ -19,14 +19,14 @@ public class UserCRUDService implements CRUDService<UserDto>{
 
     @Override
     public UserDto getById(Integer id) {
-        log.info("Get by ID: " + id);
+        log.info("User with ID - " + id);
         UserEntity userEntity = userRepository.findById(id).orElseThrow();
         return mapToDto(userEntity);
     }
 
     @Override
     public Collection<UserDto> getAll() {
-        log.info("Get all");
+        log.info("Users");
         return userRepository.findAll()
                 .stream()
                 .map(UserCRUDService::mapToDto)
@@ -34,30 +34,30 @@ public class UserCRUDService implements CRUDService<UserDto>{
     }
 
     @Override
-    public void create(UserDto item) {
-        log.info("Create");
-        String password = BCrypt.withDefaults().hashToString(10, item.getPassword().toCharArray());
-        item.setPassword(password);
-        UserEntity userEntity = mapToEntity(item);
+    public void create(UserDto userDto) {
+        log.info("User created");
+        String password = BCrypt.withDefaults().hashToString(10, userDto.getPassword().toCharArray());
+        userDto.setPassword(password);
+        UserEntity userEntity = mapToEntity(userDto);
         userRepository.save(userEntity);
     }
 
     @Override
-    public void update(UserDto item) {
-        log.info("Update");
+    public void update(UserDto userDto) {
+        log.info("User updated");
 
-        if (!item.getPassword().isEmpty() || item.getPassword() != null) {
-            String newPassword = BCrypt.withDefaults().hashToString(10, item.getPassword().toCharArray());
-            item.setPassword(newPassword);
+        if (!userDto.getPassword().isEmpty() || userDto.getPassword() != null) {
+            String newPassword = BCrypt.withDefaults().hashToString(10, userDto.getPassword().toCharArray());
+            userDto.setPassword(newPassword);
         }
 
-        UserEntity userEntity = mapToEntity(item);
+        UserEntity userEntity = mapToEntity(userDto);
         userRepository.save(userEntity);
     }
 
     @Override
     public void delete(Integer id) {
-        log.info("Delete " + id);
+        log.info("User deleted with ID - " + id);
         userRepository.deleteById(id);
     }
 
@@ -89,3 +89,4 @@ public class UserCRUDService implements CRUDService<UserDto>{
         return userEntity;
     }
 }
+
