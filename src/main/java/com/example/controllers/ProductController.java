@@ -5,6 +5,7 @@ import com.example.dto.UserDto;
 import com.example.services.ProductCRUDService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,10 +20,13 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @ResponseBody
     @GetMapping("/product/{id}")
-    public ProductDto getById(@PathVariable Integer id) {
-        return productService.getById(id);
+    public String getById(@PathVariable Integer id, Model model) {
+        ProductDto productDto = productService.getById(id);
+
+        model.addAttribute("productDto", productDto);
+
+        return "show-product";
     }
 
     @ResponseBody
@@ -32,7 +36,7 @@ public class ProductController {
     }
 
     @PostMapping("/addproduct")
-    public String addProduct(@RequestBody ProductDto productDto, BindingResult result) {
+    public String addProduct(@ModelAttribute("productDto") ProductDto productDto, BindingResult result) {
         if (result.hasErrors() || productDto.getName().isEmpty() || productDto.getDescription().isEmpty()) {
             return "";
         }
@@ -43,7 +47,7 @@ public class ProductController {
     }
 
     @PutMapping("/edit_product/{id}")
-    public String updateProduct(@PathVariable Integer id, @RequestBody ProductDto productDto) {
+    public String updateProduct(@PathVariable Integer id, @ModelAttribute("productDto") ProductDto productDto) {
         productDto.setId(id);
         productService.update(productDto);
         return "redirect:/";
@@ -53,5 +57,26 @@ public class ProductController {
     public String deleteProduct(@PathVariable Integer id) {
         productService.delete(id);
         return "redirect:/";
+    }
+
+    @GetMapping("/")
+    public String showIndexPage(Model model) {
+        Collection<ProductDto> products = productService.getAll();
+        model.addAttribute("products", products);
+        return "index";
+    }
+
+    @GetMapping("/addproduct")
+    public String showAddProductPage(Model model) {
+        model.addAttribute("productDto", new ProductDto());
+        return "add-product";
+    }
+
+    @GetMapping("/edit_product/{id}")
+    public String showProductUpdatePage(@PathVariable Integer id, Model model) {
+        ProductDto productDto = productService.getById(id);
+
+        model.addAttribute("productDto", productDto);
+        return "update-product";
     }
 }

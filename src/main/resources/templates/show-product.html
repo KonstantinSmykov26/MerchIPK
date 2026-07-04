@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Информация о товаре</title>
+</head>
+<body style="font-family: Arial, sans-serif; padding: 20px;">
+
+<div style="margin-bottom: 20px;">
+    <a href="/" style="text-decoration: none; color: #6c757d;">&larr; Назад к списку товаров</a>
+</div>
+
+<div style="border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; max-width: 500px; background-color: #f8f9fa;">
+    <h1 th:text="${productDto.name}" style="margin-top: 0; color: #333;">Название товара</h1>
+
+    <hr style="border: 0; border-top: 1px solid #dee2e6; margin: 15px 0;">
+
+    <h3>Описание:</h3>
+    <p th:text="${productDto.description}" style="color: #495057; line-height: 1.5; font-size: 16px;">
+        Здесь будет подробное описание товара.
+    </p>
+</div>
+
+</body>
+</html>
