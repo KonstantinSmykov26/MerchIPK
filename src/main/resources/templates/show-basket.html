@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Моя корзина</title>
+</head>
+<body style="font-family: Arial, sans-serif; padding: 20px;">
+
+<div style="margin-bottom: 20px;">
+    <a href="/" style="text-decoration: none; color: #6c757d;">&larr; Продолжить покупки</a>
+</div>
+
+<h2>Ваша корзина</h2>
+
+<div th:if="${#lists.isEmpty(basketItems)}" style="padding: 20px; background-color: #f8f9fa; border-radius: 5px;">
+    <p>В вашей корзине пока нет товаров.</p>
+</div>
+
+<table th:if="${!#lists.isEmpty(basketItems)}" border="1" style="border-collapse: collapse; width: 100%; max-width: 600px; text-align: left;">
+    <thead>
+    <tr style="background-color: #f2f2f2;">
+        <th style="padding: 8px;">Товар</th>
+        <th style="padding: 8px;">Описание</th>
+        <th style="padding: 8px;">Количество</th>
+        <th style="padding: 8px;">Действие</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${basketItems}">
+        <td th:text="${item.productDto.name}" style="padding: 8px; font-weight: bold;"></td>
+        <td th:text="${item.productDto.description}" style="padding: 8px; color: #666;"></td>
+        <td th:text="${item.quantity}" style="padding: 8px; text-align: center;"></td>
+        <td style="padding: 8px; text-align: center;">
+            <form th:action="@{/delete_basket/{id}(id=${item.id})}" th:method="delete" style="display:inline;">
+                <button type="submit" onclick="return confirm('Удалить товар из корзины?')" style="background:none; border:none; color:red; cursor:pointer; text-decoration:underline; padding:0;">
+                    Удалить
+                </button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

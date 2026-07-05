@@ -1,9 +1,7 @@
 package com.example.controllers;
 
 import com.example.dto.ProductDto;
-import com.example.dto.UserDto;
 import com.example.services.ProductCRUDService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

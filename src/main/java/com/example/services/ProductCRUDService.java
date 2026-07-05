@@ -1,16 +1,13 @@
 package com.example.services;
 
-import at.favre.lib.crypto.bcrypt.BCrypt;
+import com.example.dto.BasketDto;
 import com.example.dto.ProductDto;
-import com.example.dto.UserDto;
 import com.example.entity.ProductEntity;
-import com.example.entity.UserEntity;
 import com.example.repositories.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.List;
 
 @Slf4j
 @Service
