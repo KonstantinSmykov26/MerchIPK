@@ -70,8 +70,24 @@ public class BasketController {
 
         Collection<BasketDto> userItems = basketService.getItemsByUserEmail(currentUserEmail);
 
+        double total = userItems.stream().mapToDouble(basketDto -> basketDto.getQuantity() * basketDto.getProductDto().getPrice()).sum();
+
         model.addAttribute("basketItems", userItems);
+        model.addAttribute("totalPrice", total);
 
         return "show-basket";
+    }
+
+    @GetMapping("/make_order")
+    public String makeOrder(HttpSession session) {
+        String currentUserEmail = (String) session.getAttribute("currentUser");
+
+        if (currentUserEmail == null) {
+            return "redirect:/signin";
+        }
+
+        basketService.makeOrder(currentUserEmail);
+
+        return "redirect:/";
     }
 }

@@ -99,6 +99,14 @@ public class BasketCRUDService implements CRUDService<BasketDto> {
                 .toList();
     }
 
+    public void makeOrder(String email) {
+        Collection<BasketDto> userItems = getItemsByUserEmail(email);
+
+        for (BasketDto basketDto : userItems) {
+            basketRepository.deleteById(basketDto.getId());
+        }
+    }
+
     public static BasketDto mapToDto(BasketEntity basketEntity) {
         BasketDto basketDto = new BasketDto();
         basketDto.setId(basketEntity.getId());

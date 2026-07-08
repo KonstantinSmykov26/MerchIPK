@@ -5,5 +5,8 @@
     <label for="description">Description</label>
     <input type="text" th:field="*{description}" id="description" placeholder="Description">
     <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+    <label for="price">Price</label>
+    <input type="number" th:field="*{price}" id="price" placeholder="Price">
+    <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
     <input type="submit" value="Add Product">
 </form>

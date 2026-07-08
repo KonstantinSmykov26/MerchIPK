@@ -59,6 +59,7 @@ public class ProductCRUDService implements CRUDService<ProductDto> {
         productDto.setId(productEntity.getId());
         productDto.setName(productEntity.getName());
         productDto.setDescription(productEntity.getDescription());
+        productDto.setPrice(productEntity.getPrice());
         return productDto;
     }
 
@@ -67,6 +68,7 @@ public class ProductCRUDService implements CRUDService<ProductDto> {
         productEntity.setId(productDto.getId());
         productEntity.setName(productDto.getName());
         productEntity.setDescription(productDto.getDescription());
+        productEntity.setPrice(productDto.getPrice());
         return productEntity;
     }
 }

@@ -15,12 +15,15 @@ public class ProductEntity {
 
     private String description;
 
+    private Double price;
+
     public ProductEntity() {
     }
 
-    public ProductEntity(String name, String description) {
+    public ProductEntity(String name, String description, Double price) {
         this.name = name;
         this.description = description;
+        this.price = price;
     }
 
     public Integer getId() {
@@ -45,5 +48,13 @@ public class ProductEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

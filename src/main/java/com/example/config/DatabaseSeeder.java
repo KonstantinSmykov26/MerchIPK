@@ -29,11 +29,11 @@ public class DatabaseSeeder implements CommandLineRunner {
             String password = BCrypt.withDefaults().hashToString(10, "admin".toCharArray());
             UserEntity userEntity = new UserEntity("admin", password);
 
-            ProductEntity productEntity1 = new ProductEntity("Кофта", "Тёплая кофта");
-            ProductEntity productEntity2 = new ProductEntity("Браслет", "Красивый браслет");
-            ProductEntity productEntity3 = new ProductEntity("Ручка", "Синяя ручка");
-            ProductEntity productEntity4 = new ProductEntity("Футболка", "Удобная футболка");
-            ProductEntity productEntity5 = new ProductEntity("Штаны", "Стильные штаны");
+            ProductEntity productEntity1 = new ProductEntity("Кофта", "Тёплая кофта", 500.0);
+            ProductEntity productEntity2 = new ProductEntity("Браслет", "Красивый браслет", 100.0);
+            ProductEntity productEntity3 = new ProductEntity("Ручка", "Синяя ручка", 50.0);
+            ProductEntity productEntity4 = new ProductEntity("Футболка", "Удобная футболка",1500.0);
+            ProductEntity productEntity5 = new ProductEntity("Штаны", "Стильные штаны", 1000.0);
 
             userRepository.save(userEntity);
             productRepository.saveAll(List.of(productEntity1, productEntity2, productEntity3, productEntity4, productEntity5));

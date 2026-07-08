@@ -21,7 +21,9 @@
     <tr style="background-color: #f2f2f2;">
         <th style="padding: 8px;">Товар</th>
         <th style="padding: 8px;">Описание</th>
+        <th style="padding: 8px;">Цена</th>
         <th style="padding: 8px;">Количество</th>
+        <th style="padding: 8px;">Стоимость</th>
         <th style="padding: 8px;">Действие</th>
     </tr>
     </thead>
@@ -29,7 +31,9 @@
     <tr th:each="item : ${basketItems}">
         <td th:text="${item.productDto.name}" style="padding: 8px; font-weight: bold;"></td>
         <td th:text="${item.productDto.description}" style="padding: 8px; color: #666;"></td>
+        <td th:text="${item.productDto.price}" style="padding: 8px; text-align: center;"></td>
         <td th:text="${item.quantity}" style="padding: 8px; text-align: center;"></td>
+        <td th:text="${item.quantity * item.productDto.price}" style="padding: 8px; text-align: center;"></td>
         <td style="padding: 8px; text-align: center;">
             <form th:action="@{/delete_basket/{id}(id=${item.id})}" th:method="delete" style="display:inline;">
                 <button type="submit" onclick="return confirm('Удалить товар из корзины?')" style="background:none; border:none; color:red; cursor:pointer; text-decoration:underline; padding:0;">
@@ -40,6 +44,17 @@
     </tr>
     </tbody>
 </table>
+
+<div>
+    <span th:if="${!#lists.isEmpty(basketItems)}">
+        <strong>Итого: </strong>
+        <span th:text="${totalPrice}" style="color: #28a745; font-weight: bold;">0.0</span>
+        <strong>руб.</strong>
+        <p>
+            <a href="/make_order" style="text-decoration: none; padding: 6px 12px; background-color: #17a2b8; color: white; border-radius: 4px; display: inline-block;">Оформить заказ</a>
+        </p>
+    </span>
+</div>
 
 </body>
 </html>
