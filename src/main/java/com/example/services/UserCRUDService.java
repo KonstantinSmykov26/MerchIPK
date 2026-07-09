@@ -51,7 +51,12 @@ public class UserCRUDService implements CRUDService<UserDto> {
             userDto.setPassword(newPassword);
         }
 
-        UserEntity userEntity = mapToEntity(userDto);
+        UserEntity userEntity = userRepository.findById(userDto.getId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        userEntity.setEmail(userDto.getEmail());
+        userEntity.setPassword(userEntity.getPassword());
+
         userRepository.save(userEntity);
     }
 

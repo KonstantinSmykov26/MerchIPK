@@ -17,6 +17,8 @@ public class ProductEntity {
 
     private Double price;
 
+    private Boolean isActive;
+
     public ProductEntity() {
     }
 
@@ -24,6 +26,7 @@ public class ProductEntity {
         this.name = name;
         this.description = description;
         this.price = price;
+        this.isActive = true;
     }
 
     public Integer getId() {
@@ -56,5 +59,13 @@ public class ProductEntity {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean active) {
+        isActive = active;
     }
 }

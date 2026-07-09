@@ -54,7 +54,14 @@ public class BasketCRUDService implements CRUDService<BasketDto> {
     @Override
     public void update(BasketDto basketDto) {
         log.info("Basket updated");
-        BasketEntity basketEntity = mapToEntity(basketDto);
+
+        BasketEntity basketEntity = basketRepository.findById(basketDto.getId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        basketEntity.setUserEntity(UserCRUDService.mapToEntity(basketDto.getUserDto()));
+        basketEntity.setProductEntity(ProductCRUDService.mapToEntity(basketDto.getProductDto()));
+        basketEntity.setQuantity(basketEntity.getQuantity());
+
         basketRepository.save(basketEntity);
     }
 
@@ -70,6 +77,11 @@ public class BasketCRUDService implements CRUDService<BasketDto> {
 
         ProductEntity productEntity = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Товар не найден"));
+
+        // КРИТИЧЕСКАЯ ПРОВЕРКА: Если товар архивирован/удален, запрещаем его добавление
+        if (Boolean.FALSE.equals(productEntity.getIsActive())) {
+            throw new IllegalArgumentException("Нельзя добавить в корзину удаленный товар!");
+        }
 
         Optional<BasketEntity> existingItem = basketRepository.findAll().stream()
                 .filter(basket -> basket.getUserEntity().getId().equals(userEntity.getId()))

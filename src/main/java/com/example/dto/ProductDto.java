@@ -5,6 +5,7 @@ public class ProductDto {
     private String name;
     private String description;
     private Double price;
+    private Boolean isActive;
 
     public Integer getId() {
         return id;
@@ -36,5 +37,13 @@ public class ProductDto {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean active) {
+        isActive = active;
     }
 }

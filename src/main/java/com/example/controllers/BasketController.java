@@ -42,7 +42,12 @@ public class BasketController {
             return "redirect:/signin";
         }
 
-        basketService.addProductToUserBasket(currentUserEmail, productId, quantity);
+        try {
+            basketService.addProductToUserBasket(currentUserEmail, productId, quantity);
+        } catch (IllegalArgumentException e) {
+            // Если прилетел обход валидации удаленного товара — уводим на главную
+            return "redirect:/?error=product_deleted";
+        }
 
         return "redirect:/";
     }

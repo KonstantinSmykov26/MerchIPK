@@ -40,12 +40,14 @@
             </tr>
         </thead>
         <tbody>
-        <tr th:each="product : ${products}">
+        <tr th:each="product : ${products}" th:if="${product.isActive or session.currentUser == 'admin'}">
+
             <td style="padding: 8px;">
                 <a th:href="@{/product/{id}(id=${product.id})}"
                    th:text="${product.name}"
-                   style="text-decoration: none; color: #007bff; font-weight: bold;">
+                   th:style="${product.isActive} ? 'text-decoration: none; color: #007bff; font-weight: bold;' : 'text-decoration: line-through; color: #6c757d;'">
                 </a>
+                <span th:if="${!product.isActive}" style="color: red; font-size: 12px; margin-left: 5px;">(Удален)</span>
             </td>
 
             <td th:if="${session.currentUser == 'admin'}" style="padding: 8px;">
@@ -53,9 +55,15 @@
             </td>
 
             <td th:if="${session.currentUser == 'admin'}" style="padding: 8px;">
-                <form th:action="@{/delete_product/{id}(id=${product.id})}" th:method="delete" style="display:inline;">
+                <form th:if="${product.isActive}" th:action="@{/delete_product/{id}(id=${product.id})}" th:method="delete" style="display:inline;">
                     <button type="submit" onclick="return confirm('Are you sure?')" style="background:none; border:none; color:red; cursor:pointer; text-decoration:underline; padding:0; font-family: inherit; font-size: inherit;">
                         Delete
+                    </button>
+                </form>
+
+                <form th:if="${!product.isActive}" th:action="@{/return_product/{id}(id=${product.id})}" th:method="put" style="display:inline;">
+                    <button type="submit" onclick="return confirm('Восстановить этот товар?')" style="background:none; border:none; color:#28a745; cursor:pointer; text-decoration:underline; padding:0; font-family: inherit; font-size: inherit;">
+                        Return
                     </button>
                 </form>
             </td>
