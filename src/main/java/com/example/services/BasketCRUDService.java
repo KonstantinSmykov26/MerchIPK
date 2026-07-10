@@ -106,7 +106,9 @@ public class BasketCRUDService implements CRUDService<BasketDto> {
 
         return basketRepository.findAll()
                 .stream()
-                .filter(basket -> basket.getUserEntity() != null && email.equals(basket.getUserEntity().getEmail()))
+                .filter(basket -> basket.getUserEntity() != null &&
+                        email.equals(basket.getUserEntity().getEmail())  &&
+                        basket.getProductEntity().getIsActive() == true)
                 .map(BasketCRUDService::mapToDto)
                 .toList();
     }
