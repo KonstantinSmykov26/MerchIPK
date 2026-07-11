@@ -82,17 +82,4 @@ public class BasketController {
 
         return "show-basket";
     }
-
-    @GetMapping("/make_order")
-    public String makeOrder(HttpSession session) {
-        String currentUserEmail = (String) session.getAttribute("currentUser");
-
-        if (currentUserEmail == null) {
-            return "redirect:/signin";
-        }
-
-        basketService.makeOrder(currentUserEmail);
-
-        return "redirect:/";
-    }
 }

@@ -1,15 +1,13 @@
 package com.example.services;
 
 import com.example.dto.BasketDto;
-import com.example.entity.BasketEntity;
-import com.example.entity.ProductEntity;
-import com.example.entity.UserEntity;
-import com.example.repositories.BasketRepository;
-import com.example.repositories.ProductRepository;
-import com.example.repositories.UserRepository;
+import com.example.dto.OrderItemDto;
+import com.example.entity.*;
+import com.example.repositories.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -17,9 +15,7 @@ import java.util.Optional;
 @Service
 public class BasketCRUDService implements CRUDService<BasketDto> {
     private final BasketRepository basketRepository;
-
     private final UserRepository userRepository;
-
     private final ProductRepository productRepository;
 
     public BasketCRUDService(BasketRepository basketRepository, UserRepository userRepository, ProductRepository productRepository) {
@@ -111,14 +107,6 @@ public class BasketCRUDService implements CRUDService<BasketDto> {
                         basket.getProductEntity().getIsActive() == true)
                 .map(BasketCRUDService::mapToDto)
                 .toList();
-    }
-
-    public void makeOrder(String email) {
-        Collection<BasketDto> userItems = getItemsByUserEmail(email);
-
-        for (BasketDto basketDto : userItems) {
-            basketRepository.deleteById(basketDto.getId());
-        }
     }
 
     public static BasketDto mapToDto(BasketEntity basketEntity) {

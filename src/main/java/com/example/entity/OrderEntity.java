@@ -12,7 +12,10 @@ public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private String userEmail;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity userEntity;
     private Double totalPrice;
     private LocalDateTime createdAt;
 
@@ -27,12 +30,12 @@ public class OrderEntity {
         this.id = id;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public UserEntity getUserEntity() {
+        return userEntity;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 
     public Double getTotalPrice() {

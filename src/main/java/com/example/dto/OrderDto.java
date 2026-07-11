@@ -5,7 +5,7 @@ import java.util.Collection;
 
 public class OrderDto {
     private Integer id;
-    private String userEmail;
+    private UserDto userDto;
     private Double totalPrice;
     private LocalDateTime createdAt;
     private Collection<OrderItemDto> items;
@@ -18,12 +18,12 @@ public class OrderDto {
         this.id = id;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public UserDto getUserDto() {
+        return userDto;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setUserDto(UserDto userDto) {
+        this.userDto = userDto;
     }
 
     public Double getTotalPrice() {
