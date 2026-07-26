@@ -89,13 +89,6 @@ public class UserController {
         return "redirect:/";
     }
 
-//    @GetMapping("/")
-//    public String showIndexPage(Model model) {
-//        Collection<UserDto> users = (userService.getAll().isEmpty()) ? null : userService.getAll();
-//        model.addAttribute("users", users);
-//        return "index";
-//    }
-
     @GetMapping("/signup")
     public String showSignUpForm(Model model) {
         model.addAttribute("userDto", new UserDto());
